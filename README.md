@@ -1,12 +1,14 @@
 # Assessing Parameter Redundancy in Transformers for Jet Tagging
 
-This repository provides the PyTorch implementation accompanying **"Assessing Parameter Redundancy in Transformers for Jet Tagging"**.
-
-It contains two parameter-efficient Transformer jet taggers based on the [Particle Transformer (ParT)](https://github.com/jet-universe/particle_transformer) and the [More-Interaction Particle Transformer (MIParT)](https://github.com/USST-HEP/MIParT): **ParT-HG** and **MIParT-HG**.
+This repository provides the PyTorch implementation accompanying **"Assessing Parameter Redundancy in Transformers for Jet Tagging"**. It contains two parameter-efficient Transformer jet taggers based on the [Particle Transformer (ParT)](https://github.com/jet-universe/particle_transformer) and the [More-Interaction Particle Transformer (MIParT)](https://github.com/USST-HEP/MIParT): **ParT-HG** and **MIParT-HG**.
 
 ## Introduction
 
-ParT-HG and MIParT-HG reduce the parameters in two components while keeping the pairwise-interaction embedding and attention mechanisms unchanged:
+Transformer-based jet taggers achieve strong discrimination by exploiting correlations among jet constituents, but their feed-forward networks and dense particle embeddings contain a large fraction of the trainable parameters. ParT-HG and MIParT-HG reduce this redundancy while preserving the original pairwise-interaction embedding and attention mechanisms.
+
+On the top-tagging and quark-gluon benchmarks, ParT-HG and MIParT-HG retain comparable tagging performance, including background rejection at fixed signal efficiencies, while using only approximately **48%** and **39.7%** of the parameters of their respective baselines. On the larger JetClass dataset, accuracy and AUC decrease by less than 1%, although background rejection decreases for several signal classes.
+
+The two architectural modifications are:
 
 - **Lightweight particle embedding:** replaces the original dense embedding with a grouped channelwise expansion followed by two pointwise projections,
   `C -> 4C -> d/2 -> d`.
